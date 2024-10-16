@@ -11,6 +11,7 @@ export class Name {
     }
 
     public asNameString(delimiter: string = this.delimiter): string {
+        //return "oss.cs.fau.de"
         throw new Error("needs implementation");
     }
 
