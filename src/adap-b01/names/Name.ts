@@ -7,37 +7,90 @@ export class Name {
     private delimiter: string = this.DEFAULT_DELIMITER;
 
     constructor(other: string[], delimiter?: string) {
-        throw new Error("needs implementation");
+
+        if (delimiter != undefined)
+        {
+            this.delimiter = delimiter;
+        }
+        this.components = other;
     }
 
+    /** @methodtype conversion-method */
     /** Returns human-readable representation of Name instance */
     public asNameString(delimiter: string = this.delimiter): string {
-        //return "oss.cs.fau.de"
-        throw new Error("needs implementation");
+
+        let nameAsString : string = "";
+        let counter : number = 1;
+        for (let nameComponent of this.components)
+        {
+            nameAsString += nameComponent;
+            if (counter < this.components.length)
+            {
+                nameAsString += delimiter;
+            }
+            counter++;
+        }
+
+        return nameAsString;
     }
 
+    /** @methodtype get-method */
     public getComponent(i: number): string {
-        throw new Error("needs implementation");
+
+        if (this.components.length > i && i >= 0)
+        {
+            return this.components[i];
+        }
+
+        throw new RangeError("Invalid Index value");
     }
 
+    /** @methodtype set-method */
     public setComponent(i: number, c: string): void {
-        throw new Error("needs implementation");
+
+        if (this.components.length > i && i >= 0)
+        {
+            this.components[i] = c;
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
 
+    /** @methodtype get-method */
     public getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.components.length;
     }
 
+    /** @methodtype command-method */
     public insert(i: number, c: string): void {
-        throw new Error("needs implementation");
+
+        if (this.components.length > i && i >= 0)
+        {
+            this.components.splice(i, 0, c);
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
 
     public append(c: string): void {
-        throw new Error("needs implementation");
+        this.components.push(c);
     }
 
+    /** @methodtype command-method */
     public remove(i: number): void {
-        throw new Error("needs implementation");
+
+        if (this.components.length > i && i >= 0)
+        {
+            this.components.splice(i, 1);
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
 
 }
