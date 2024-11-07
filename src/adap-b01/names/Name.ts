@@ -58,6 +58,7 @@ export class Name {
         }
     }
 
+    /** Returns number of components in Name instance */
     /** @methodtype get-method */
     public getNoComponents(): number {
         return this.components.length;
