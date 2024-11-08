@@ -23,6 +23,11 @@ export class Name {
         let counter : number = 1;
         for (let nameComponent of this.components)
         {
+            if (nameComponent.includes(delimiter))
+            {
+                nameComponent = nameComponent.replace(delimiter, this.ESCAPE_CHARACTER+delimiter);
+            }
+
             nameAsString += nameComponent;
             if (counter < this.components.length)
             {

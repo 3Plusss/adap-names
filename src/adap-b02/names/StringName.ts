@@ -8,51 +8,132 @@ export class StringName implements Name {
     protected length: number = 0;
 
     constructor(other: string, delimiter?: string) {
-        throw new Error("needs implementation");
+        if (delimiter != undefined)
+        {
+            this.delimiter = delimiter;
+        }
+
+        this.name = other;
+        this.length = other.length;
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation");
+        return this.name.replaceAll(this.delimiter, delimiter);
     }
 
     public asDataString(): string {
-        throw new Error("needs implementation");
+        return this.name.replaceAll(this.delimiter, ESCAPE_CHARACTER+this.delimiter);
     }
 
     public isEmpty(): boolean {
-        throw new Error("needs implementation");
+        return this.name === "";
     }
 
     public getDelimiterCharacter(): string {
-        throw new Error("needs implementation");
+        return this.delimiter;
     }
 
     public getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.name.split(this.delimiter).length;
     }
 
     public getComponent(x: number): string {
-        throw new Error("needs implementation");
+        if (this.getNoComponents() > x && x >= 0)
+        {
+            return this.name.split(this.delimiter)[x];
+        }
+
+        throw new RangeError("Invalid Index value");
     }
 
     public setComponent(n: number, c: string): void {
-        throw new Error("needs implementation");
+        if (this.getNoComponents() > n && n >= 0)
+        {
+            let stringArrayName = this.name.split(this.delimiter);
+            stringArrayName[n] = c;
+
+            this.name = "";
+            let counter : number = 1;
+            for (let nameComponent of stringArrayName)
+            {
+                this.name += nameComponent;
+                if (counter < stringArrayName.length)
+                {
+                    this.name += this.delimiter;
+                }
+                counter++;
+            }
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
 
     public insert(n: number, c: string): void {
-        throw new Error("needs implementation");
+        if (this.getNoComponents() > n && n >= 0)
+        {
+            let stringArrayName = this.name.split(this.delimiter);
+            stringArrayName.splice(n, 0, c);
+
+            this.name = "";
+            let counter : number = 1;
+            for (let nameComponent of stringArrayName)
+            {
+                this.name += nameComponent;
+                if (counter < stringArrayName.length)
+                {
+                    this.name += this.delimiter;
+                }
+                counter++;
+            }
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
 
     public append(c: string): void {
-        throw new Error("needs implementation");
+        this.name += this.delimiter + c;
     }
 
     public remove(n: number): void {
-        throw new Error("needs implementation");
+        if (this.getNoComponents() > n && n >= 0)
+        {
+            let stringArrayName = this.name.split(this.delimiter);
+            stringArrayName.splice(n, 1);
+
+            this.name = "";
+            let counter : number = 1;
+            for (let nameComponent of stringArrayName)
+            {
+                this.name += nameComponent;
+                if (counter < stringArrayName.length)
+                {
+                    this.name += this.delimiter;
+                }
+                counter++;
+            }
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
 
     public concat(other: Name): void {
-        throw new Error("needs implementation");
+        let numberOfComponents = other.getNoComponents();
+        let counter = 0;
+
+        if (numberOfComponents > 0)
+        {
+            while(counter < numberOfComponents)
+            {
+                this.append(other.getComponent(counter));
+                counter++;
+            }
+        }
     }
 
 }
