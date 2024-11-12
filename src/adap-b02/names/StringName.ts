@@ -33,10 +33,9 @@ export class StringName implements Name {
 
         while (counter < this.getNoComponents())
         {
-            nameAsString += this
-                            .getComponent(counter)
-                            .replaceAll(DEFAULT_DELIMITER, ESCAPE_CHARACTER+DEFAULT_DELIMITER)
-                            .replaceAll(ESCAPE_CHARACTER+this.delimiter, this.delimiter);
+            nameAsString += this.getComponent(counter)
+                                .replaceAll(DEFAULT_DELIMITER, ESCAPE_CHARACTER+DEFAULT_DELIMITER)
+                                .replaceAll(ESCAPE_CHARACTER+this.delimiter, this.delimiter);
 
             if (counter + 1 != this.getNoComponents())
             {

@@ -35,11 +35,8 @@ export class StringArrayName implements Name {
         let counter : number = 1;
         for (let nameComponent of this.components)
         {
-            if (nameComponent.includes(DEFAULT_DELIMITER))
-            {
-                nameComponent = nameComponent.replaceAll(DEFAULT_DELIMITER, ESCAPE_CHARACTER+DEFAULT_DELIMITER)
-                                             .replaceAll(ESCAPE_CHARACTER+this.delimiter, this.delimiter);
-            }
+            nameComponent = nameComponent.replaceAll(DEFAULT_DELIMITER, ESCAPE_CHARACTER+DEFAULT_DELIMITER)
+                                         .replaceAll(ESCAPE_CHARACTER+this.delimiter, this.delimiter);
 
             nameAsString += nameComponent;
             if (counter < this.components.length)
