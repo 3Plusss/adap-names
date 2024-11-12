@@ -6,28 +6,54 @@ export class StringArrayName extends AbstractName {
     protected components: string[] = [];
 
     constructor(other: string[], delimiter?: string) {
-        super();
-        throw new Error("needs implementation");
+        super(delimiter);
+        this.components = other;
     }
 
     getNoComponents(): number {
-        throw new Error("needs implementation");
+        return this.components.length;
     }
 
     getComponent(i: number): string {
-        throw new Error("needs implementation");
+        if (this.components.length > i && i >= 0)
+        {
+            return this.components[i];
+        }
+
+        throw new RangeError("Invalid Index value")
     }
     setComponent(i: number, c: string) {
-        throw new Error("needs implementation");
+        if (this.components.length > i && i >= 0)
+        {
+            this.components[i] = c;
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
 
     insert(i: number, c: string) {
-        throw new Error("needs implementation");
+        if (this.components.length > i && i >= 0)
+        {
+            this.components.splice(i, 0, c);
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
     append(c: string) {
-        throw new Error("needs implementation");
+        this.components.push(c);
     }
     remove(i: number) {
-        throw new Error("needs implementation");
+        if (this.components.length > i && i >= 0)
+        {
+            this.components.splice(i, 1);
+        }
+        else
+        {
+            throw new RangeError("Invalid Index value");
+        }
     }
 }
