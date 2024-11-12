@@ -18,11 +18,34 @@ export class StringName implements Name {
     }
 
     public asString(delimiter: string = this.delimiter): string {
-        return this.name.replaceAll(this.delimiter, delimiter);
+        return this.name.replaceAll(ESCAPE_CHARACTER, "")
+                        .replaceAll(this.delimiter, delimiter);
     }
 
     public asDataString(): string {
-        return this.name.replaceAll(this.delimiter, ESCAPE_CHARACTER+this.delimiter);
+        if (this.getNoComponents() <= 0)
+        {
+            throw new Error("Name has no components!");
+        }
+
+        let nameAsString : string = "";
+        let counter : number = 0;
+
+        while (counter < this.getNoComponents())
+        {
+            nameAsString += this
+                            .getComponent(counter)
+                            .replaceAll(DEFAULT_DELIMITER, ESCAPE_CHARACTER+DEFAULT_DELIMITER)
+                            .replaceAll(ESCAPE_CHARACTER+this.delimiter, this.delimiter);
+
+            if (counter + 1 != this.getNoComponents())
+            {
+                nameAsString += DEFAULT_DELIMITER;
+            }
+            counter++;
+        }
+
+        return nameAsString;
     }
 
     public isEmpty(): boolean {
