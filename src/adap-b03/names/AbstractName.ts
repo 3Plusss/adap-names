@@ -101,7 +101,7 @@ export abstract class AbstractName implements Name {
 
     public getHashCode(): number {
         let hash = 0;
-        const stringName = this.toString();
+        const stringName = this.asDataString();
 
         for (let i = 0; i < stringName.length; i++) {
             const char = stringName.charCodeAt(i);
@@ -117,7 +117,7 @@ export abstract class AbstractName implements Name {
     }
 
     public isEmpty(): boolean {
-        return this.getNoComponents() <= 0;
+        return this.getNoComponents() == 0;
     }
 
     public getDelimiterCharacter(): string {

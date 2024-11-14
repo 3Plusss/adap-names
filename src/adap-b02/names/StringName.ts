@@ -14,7 +14,7 @@ export class StringName implements Name {
         }
 
         this.name = other;
-        this.length = other.length;
+        this.length = this.name.split(this.getDelimiterCharacter()).length;
     }
 
     public asString(delimiter: string = this.delimiter): string {
@@ -109,6 +109,8 @@ export class StringName implements Name {
                 }
                 counter++;
             }
+
+            this.length += 1;
         }
         else
         {
@@ -118,6 +120,7 @@ export class StringName implements Name {
 
     public append(c: string): void {
         this.name += this.delimiter + c;
+        this.length += 1;
     }
 
     public remove(n: number): void {
@@ -137,6 +140,8 @@ export class StringName implements Name {
                 }
                 counter++;
             }
+
+            this.length -= 1;
         }
         else
         {

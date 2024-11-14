@@ -22,6 +22,7 @@ export class StringArrayName extends AbstractName {
 
         throw new RangeError("Invalid Index value")
     }
+
     setComponent(i: number, c: string) {
         if (this.components.length > i && i >= 0)
         {
@@ -43,9 +44,11 @@ export class StringArrayName extends AbstractName {
             throw new RangeError("Invalid Index value");
         }
     }
+
     append(c: string) {
         this.components.push(c);
     }
+
     remove(i: number) {
         if (this.components.length > i && i >= 0)
         {

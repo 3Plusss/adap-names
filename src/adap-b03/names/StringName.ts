@@ -10,11 +10,11 @@ export class StringName extends AbstractName {
         super(delimiter);
 
         this.name = other;
-        this.length = other.length;
+        this.length = this.name.split(this.getDelimiterCharacter()).length;
     }
 
     getNoComponents(): number {
-        return this.name.split(this.delimiter).length;
+        return this.length;
     }
 
     getComponent(i: number): string {
@@ -25,6 +25,7 @@ export class StringName extends AbstractName {
 
         throw new RangeError("Invalid Index value");
     }
+
     setComponent(i: number, c: string) {
         if (this.getNoComponents() > i && i >= 0)
         {
@@ -66,15 +67,20 @@ export class StringName extends AbstractName {
                 }
                 counter++;
             }
+
+            this.length += 1;
         }
         else
         {
             throw new RangeError("Invalid Index value");
         }
     }
+
     append(c: string) {
         this.name += this.delimiter + c;
+        this.length += 1;
     }
+
     remove(i: number) {
         if (this.getNoComponents() > i && i >= 0)
         {
@@ -92,6 +98,7 @@ export class StringName extends AbstractName {
                 }
                 counter++;
             }
+            this.length -= 1;
         }
         else
         {
