@@ -17,6 +17,11 @@ export abstract class AbstractName implements Name {
             throw new Error("Name has no components!");
         }
 
+        if (delimiter.length < 1)
+        {
+            throw new Error("Exceeded expected delimiter length!");
+        }
+
         let nameAsString : string = "";
         let counter : number = 0;
         while (counter < this.getNoComponents())
