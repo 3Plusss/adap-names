@@ -1,11 +1,11 @@
-import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import { Name } from "./Name";
 
 export class StringName implements Name {
 
     protected delimiter: string = DEFAULT_DELIMITER;
-
     protected name: string = "";
-    protected length: number = 0;
+    protected noComponents: number = 0;
 
     constructor(other: string, delimiter?: string) {
         if (delimiter != undefined)
@@ -14,7 +14,7 @@ export class StringName implements Name {
         }
 
         this.name = other;
-        this.length = this.name.split(this.getDelimiterCharacter()).length;
+        this.noComponents = this.name.split(this.getDelimiterCharacter()).length;
     }
 
     public asString(delimiter: string = this.delimiter): string {
@@ -110,7 +110,7 @@ export class StringName implements Name {
                 counter++;
             }
 
-            this.length += 1;
+            this.noComponents += 1;
         }
         else
         {
@@ -120,7 +120,7 @@ export class StringName implements Name {
 
     public append(c: string): void {
         this.name += this.delimiter + c;
-        this.length += 1;
+        this.noComponents += 1;
     }
 
     public remove(n: number): void {
@@ -141,7 +141,7 @@ export class StringName implements Name {
                 counter++;
             }
 
-            this.length -= 1;
+            this.noComponents -= 1;
         }
         else
         {

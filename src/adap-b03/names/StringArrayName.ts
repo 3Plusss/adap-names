@@ -1,4 +1,5 @@
-import { Name, DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "./Name";
+import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
+import { Name } from "./Name";
 import { AbstractName } from "./AbstractName";
 
 export class StringArrayName extends AbstractName {
@@ -59,4 +60,41 @@ export class StringArrayName extends AbstractName {
             throw new RangeError("Invalid Index value");
         }
     }
+
+    public clone(): Name {
+        throw new Error("needs implementation");
+    }
+
+    public asString(delimiter: string = this.delimiter): string {
+        throw new Error("needs implementation");
+    }
+
+    public toString(): string {
+        throw new Error("needs implementation");
+    }
+
+    public asDataString(): string {
+        throw new Error("needs implementation");
+    }
+
+    public isEqual(other: Name): boolean {
+        throw new Error("needs implementation");
+    }
+
+    public getHashCode(): number {
+        throw new Error("needs implementation");
+    }
+
+    public isEmpty(): boolean {
+        throw new Error("needs implementation");
+    }
+
+    public getDelimiterCharacter(): string {
+        throw new Error("needs implementation");
+    }
+
+    public concat(other: Name): void {
+        throw new Error("needs implementation");
+    }
+
 }
