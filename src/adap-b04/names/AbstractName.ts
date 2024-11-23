@@ -1,6 +1,7 @@
 import { DEFAULT_DELIMITER, ESCAPE_CHARACTER } from "../common/Printable";
 import { Name } from "./Name";
 import {InvalidStateException} from "../common/InvalidStateException";
+import {IllegalArgumentException} from "../common/IllegalArgumentException";
 
 export abstract class AbstractName implements Name {
 
@@ -16,6 +17,7 @@ export abstract class AbstractName implements Name {
 
     protected assertClassInvariants(): void {
         this.assertHasValidDelimiter();
+        this.assertHasComponents();
     }
 
     protected assertHasValidDelimiter(): void {
@@ -25,18 +27,34 @@ export abstract class AbstractName implements Name {
         }
     }
 
+    protected assertIsNotNullOrUndefined(o: Object | null):void {
+        if ((o == undefined) || (o == null))
+        {
+            throw new IllegalArgumentException("Object is null or undefined!");
+        }
+    }
+
     protected assertHasComponents(){
         if (this.getNoComponents() <= 0)
         {
             throw new InvalidStateException("Name has no components!");
         }
     }
+
+    protected assertInBounds(i : number){
+        if (this.getNoComponents() <= i || i < 0)
+        {
+            throw new IllegalArgumentException("Invalid Index value! Index is out of bounds.");
+        }
+    }
+
     public clone(): Name {
         return {... this};
     }
 
     public asString(delimiter: string = this.delimiter): string {
         this.assertHasValidDelimiter();
+        this.assertIsNotNullOrUndefined(delimiter);
         this.assertHasComponents();
 
         let nameAsString : string = "";
@@ -98,6 +116,8 @@ export abstract class AbstractName implements Name {
     }
 
     public isEqual(other: Name): boolean {
+        this.assertIsNotNullOrUndefined(other);
+
         if (this.getNoComponents() != other.getNoComponents())
         {
             return false;
@@ -153,6 +173,8 @@ export abstract class AbstractName implements Name {
 
     public concat(other: Name): void {
         this.assertClassInvariants();
+        this.assertIsNotNullOrUndefined(other);
+
 
         let backupName = this;
 
