@@ -55,6 +55,8 @@ export class StringName extends AbstractName {
     public setComponent(i: number, c: string) {
         this.assertClassInvariants();
         this.assertInBounds(i);
+        let initialState = this.clone();
+
         let stringArrayName = this.name.split(this.delimiter);
         stringArrayName[i] = c;
 
@@ -69,12 +71,15 @@ export class StringName extends AbstractName {
             }
             counter++;
         }
+        this.assertValidMethodExecution(initialState, this.getComponent(i) == c,
+                                "setComponent method failed!");
         this.assertClassInvariants();
     }
 
     public insert(i: number, c: string) {
         this.assertClassInvariants();
         this.assertInBounds(i);
+        let initialState = this.clone();
         let stringArrayName = this.name.split(this.delimiter);
         stringArrayName.splice(i, 0, c);
 
@@ -91,19 +96,27 @@ export class StringName extends AbstractName {
         }
 
         this.noComponents += 1;
+        this.assertValidMethodExecution(initialState, (this.getComponent(i) == c)
+                                                    && (this.getNoComponents() - 1 == initialState.getNoComponents()),
+                                                        "insert method failed!");
         this.assertClassInvariants();
     }
 
     public append(c: string) {
         this.assertClassInvariants();
+        let initialState = this.clone();
         this.name += this.delimiter + c;
         this.noComponents += 1;
+        this.assertValidMethodExecution(initialState, (this.getComponent(this.getNoComponents() - 1) == c)
+            && (this.getNoComponents() - 1 == initialState.getNoComponents()),
+            "append method failed!");
         this.assertClassInvariants();
     }
 
     public remove(i: number) {
         this.assertClassInvariants();
         this.assertInBounds(i);
+        let initialState = this.clone();
         let stringArrayName = this.name.split(this.delimiter);
         stringArrayName.splice(i, 1);
 
@@ -118,7 +131,9 @@ export class StringName extends AbstractName {
             }
             counter++;
         }
-
+        this.assertValidMethodExecution(initialState, (this.getComponent(i) != initialState.getComponent(i))
+            && (this.getNoComponents() + 1 == initialState.getNoComponents()),
+            "remove method failed!");
         this.noComponents -= 1;
         this.assertClassInvariants();
     }
