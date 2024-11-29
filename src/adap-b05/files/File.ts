@@ -6,7 +6,7 @@ enum FileState {
     OPEN,
     CLOSED,
     DELETED        
-};
+}
 
 export class File extends Node {
 
@@ -18,6 +18,7 @@ export class File extends Node {
 
     public open(): void {
         // do something
+        // this.state = FileState.OPEN;
     }
 
     public read(noBytes: number): Int8Array {
@@ -45,6 +46,7 @@ export class File extends Node {
 
     public close(): void {
         // do something
+        //this.state = FileState.CLOSED;
     }
 
     protected doGetFileState(): FileState {

@@ -1,9 +1,9 @@
-import { ExceptionType, AssertionDispatcher } from "../common/AssertionDispatcher";
-import { IllegalArgumentException } from "../common/IllegalArgumentException";
-import { InvalidStateException } from "../common/InvalidStateException";
-
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
+import {RootNode} from "./RootNode";
+import { AssertionDispatcher, ExceptionType  } from "../common/AssertionDispatcher";
+import {ServiceFailureException} from "../common/ServiceFailureException";
+import { InvalidStateException } from "../common/InvalidStateException";
 
 export class Node {
 
@@ -14,6 +14,7 @@ export class Node {
         this.doSetBaseName(bn);
         this.parentNode = pn; // why oh why do I have to set this
         this.initialize(pn);
+        //this.assertClassInvariants();
     }
 
     protected initialize(pn: Directory): void {
@@ -42,11 +43,14 @@ export class Node {
     }
 
     public rename(bn: string): void {
+        this.assertClassInvariants();
         this.doSetBaseName(bn);
+        this.assertClassInvariants();
     }
 
     protected doSetBaseName(bn: string): void {
         this.baseName = bn;
+        //this.assertClassInvariants();
     }
 
     public getParentNode(): Directory {
@@ -58,7 +62,28 @@ export class Node {
      * @param bn basename of node being searched for
      */
     public findNodes(bn: string): Set<Node> {
-        throw new Error("needs implementation or deletion");
+        let matchingNodes : Set<Node> = new Set<Node>();
+
+        if (this.getBaseName() == bn)
+        {
+            matchingNodes.add(this);
+        }
+
+        if (this instanceof Directory && this.getChildNodes().size > 0)
+        {
+            for (let child of this.getChildNodes())
+            {
+                let childMatches = child.findNodes(bn);
+                for (let node of childMatches)
+                {
+                    matchingNodes.add(node);
+                }
+            }
+        }
+
+        this.MethodFailedException();
+        this.assertClassInvariants();
+        return matchingNodes;
     }
 
     protected assertClassInvariants(): void {
@@ -71,4 +96,12 @@ export class Node {
         AssertionDispatcher.dispatch(et, condition, "invalid base name");
     }
 
+    protected MethodFailedException(){
+        const condition: boolean = (this.doGetBaseName() != "" && !(this instanceof RootNode)) ||
+                                    (this.doGetBaseName() == "" && this instanceof RootNode);
+        ServiceFailureException.assertCondition(condition,
+                                                "service failed",
+                                                new InvalidStateException(  "Node that isn't root node has empty " +
+                                                                            "string as base name."))
+    }
 }

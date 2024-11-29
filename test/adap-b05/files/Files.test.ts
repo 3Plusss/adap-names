@@ -1,12 +1,17 @@
 import { describe, it, expect } from "vitest";
 
 import { StringName } from "../../../src/adap-b05/names/StringName";
-
+import {Exception} from "../../../src/adap-b05/common/Exception";
+import {InvalidStateException} from "../../../src/adap-b05/common/InvalidStateException";
+import {ServiceFailureException} from "../../../src/adap-b05/common/ServiceFailureException";
 import { Node } from "../../../src/adap-b05/files/Node";
+import { Directory } from "../../../src/adap-b05/files/Directory";
 import { File } from "../../../src/adap-b05/files/File";
 import { BuggyFile } from "../../../src/adap-b05/files/BuggyFile";
-import { Directory } from "../../../src/adap-b05/files/Directory";
 import { RootNode } from "../../../src/adap-b05/files/RootNode";
+
+
+
 
 function createFileSystem(): RootNode {
   let rn: RootNode = new RootNode();
@@ -56,18 +61,18 @@ function createBuggySetup(): RootNode {
 
 describe("Buggy setup test", () => {
   it("test finding files", () => {
-    // let threwException: boolean = false;
-    // try {
-    //   let fs: RootNode = createBuggySetup();
-    //   fs.findNodes("ls");
-    // } catch(er) {
-    //   threwException = true;
-    //   let ex: Exception = er as Exception;
-    //   expect(ex instanceof ServiceFailureException);
-    //   expect(ex.hasTrigger());
-    //   let tx: Exception = ex.getTrigger();
-    //   expect(tx instanceof InvalidStateException);
-    // }
-    // expect(threwException);
+     let threwException: boolean = false;
+     try {
+       let fs: RootNode = createBuggySetup();
+       fs.findNodes("ls");
+     } catch(er) {
+       threwException = true;
+       let ex: Exception = er as Exception;
+       expect(ex instanceof ServiceFailureException);
+       expect(ex.hasTrigger());
+       let tx: Exception = ex.getTrigger();
+       expect(tx instanceof InvalidStateException);
+     }
+     expect(threwException);
   });
 });

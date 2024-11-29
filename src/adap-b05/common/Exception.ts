@@ -1,5 +1,3 @@
-import { InvalidStateException } from "./InvalidStateException";
-
 /**
  * Root class for exceptions in ADAP examples
  */
