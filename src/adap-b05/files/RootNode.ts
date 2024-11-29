@@ -28,6 +28,10 @@ export class RootNode extends Directory {
         // null operation
     }
 
+    public isRootNode(): boolean{
+        return true;
+    }
+
     protected doSetBaseName(bn: string): void {
         // null operation
     }

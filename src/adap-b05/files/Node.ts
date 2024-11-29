@@ -1,9 +1,10 @@
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
-import {RootNode} from "./RootNode";
+
 import { AssertionDispatcher, ExceptionType  } from "../common/AssertionDispatcher";
 import {ServiceFailureException} from "../common/ServiceFailureException";
 import { InvalidStateException } from "../common/InvalidStateException";
+import {RootNode} from "./RootNode";
 
 export class Node {
 
@@ -57,6 +58,10 @@ export class Node {
         return this.parentNode;
     }
 
+    public isRootNode(): boolean{
+        return false;
+    }
+
     /**
      * Returns all nodes in the tree that match bn
      * @param bn basename of node being searched for
@@ -97,8 +102,8 @@ export class Node {
     }
 
     protected MethodFailedException(){
-        const condition: boolean = (this.doGetBaseName() != "" && !(this instanceof RootNode)) ||
-                                    (this.doGetBaseName() == "" && this instanceof RootNode);
+        const condition: boolean = (this.doGetBaseName() != "" && !this.isRootNode()) ||
+                                    (this.doGetBaseName() == "" && this.isRootNode());
         ServiceFailureException.assertCondition(condition,
                                                 "service failed",
                                                 new InvalidStateException(  "Node that isn't root node has empty " +
