@@ -7,13 +7,13 @@ export class StringName implements Name {
     protected name: string = "";
     protected noComponents: number = 0;
 
-    constructor(other: string, delimiter?: string) {
+    constructor(source: string, delimiter?: string) {
         if (delimiter != undefined)
         {
             this.delimiter = delimiter;
         }
 
-        this.name = other;
+        this.name = source;
         this.noComponents = this.name.split(this.getDelimiterCharacter()).length;
     }
 

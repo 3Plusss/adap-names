@@ -1,9 +1,11 @@
+import { IllegalArgumentException } from "../common/IllegalArgumentException";
+import { InvalidStateException } from "../common/InvalidStateException";
+
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
 
 import { AssertionDispatcher, ExceptionType  } from "../common/AssertionDispatcher";
 import {ServiceFailureException} from "../common/ServiceFailureException";
-import { InvalidStateException } from "../common/InvalidStateException";
 import {RootNode} from "./RootNode";
 
 export class Node {
@@ -20,12 +22,12 @@ export class Node {
 
     protected initialize(pn: Directory): void {
         this.parentNode = pn;
-        this.parentNode.add(this);
+        this.parentNode.addChildNode(this);
     }
 
     public move(to: Directory): void {
-        this.parentNode.remove(this);
-        to.add(this);
+        this.parentNode.removeChildNode(this);
+        to.addChildNode(this);
         this.parentNode = to;
     }
 
