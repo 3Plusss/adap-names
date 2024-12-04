@@ -4,7 +4,7 @@ import { InvalidStateException } from "../common/InvalidStateException";
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
 
-import { AssertionDispatcher, ExceptionType  } from "../common/AssertionDispatcher";
+//import { AssertionDispatcher, ExceptionType  } from "../common/AssertionDispatcher";
 import {ServiceFailureException} from "../common/ServiceFailureException";
 import {RootNode} from "./RootNode";
 
@@ -46,9 +46,9 @@ export class Node {
     }
 
     public rename(bn: string): void {
-        this.assertClassInvariants();
+        //this.assertClassInvariants();
         this.doSetBaseName(bn);
-        this.assertClassInvariants();
+        //this.assertClassInvariants();
     }
 
     protected doSetBaseName(bn: string): void {
@@ -89,10 +89,10 @@ export class Node {
         }
 
         this.MethodFailedException();
-        this.assertClassInvariants();
+        //this.assertClassInvariants();
         return matchingNodes;
     }
-
+/*
     protected assertClassInvariants(): void {
         const bn: string = this.doGetBaseName();
         this.assertIsValidBaseName(bn, ExceptionType.CLASS_INVARIANT);
@@ -102,11 +102,11 @@ export class Node {
         const condition: boolean = (bn != "");
         AssertionDispatcher.dispatch(et, condition, "invalid base name");
     }
-
+*/
     protected MethodFailedException(){
         const condition: boolean = (this.doGetBaseName() != "" && !this.isRootNode()) ||
                                     (this.doGetBaseName() == "" && this.isRootNode());
-        ServiceFailureException.assertCondition(condition,
+        ServiceFailureException.assert(condition,
                                                 "service failed",
                                                 new InvalidStateException(  "Node that isn't root node has empty " +
                                                                             "string as base name."))
