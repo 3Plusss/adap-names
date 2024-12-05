@@ -166,8 +166,8 @@ export abstract class AbstractName implements Name {
     abstract remove(i: number): Name;
 
     public concat(other: Name): Name {
-        var initialState = this.clone();
-        var tempName = this.clone();
+        let initialState = this.clone();
+        let tempName = this.clone();
         for (let i = 0; i < other.getNoComponents(); i++)
         {
             tempName = tempName.append(other.getComponent(i));
